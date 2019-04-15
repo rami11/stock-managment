@@ -1,3 +1,4 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
@@ -19,6 +20,7 @@ public class Main {
                     break;
                 case "2":
                     addItemToStock(stock, scanner);
+                    scanner.nextLine();
                     break;
                 case "3":
                     deleteItemById(stock, scanner);
@@ -41,7 +43,6 @@ public class Main {
                     System.err.println("Not an option!");
 
             }
-
         }
     }
 
@@ -75,9 +76,13 @@ public class Main {
 
             System.out.println("Enter item's price: ");
             double itemPrice = scanner.nextDouble();
-            stock.addItem(new Item(itemName, itemPrice));
 
-        } catch (NumberFormatException ex) {
+            Item newItem = new Item(itemName, itemPrice);
+            stock.addItem(newItem);
+
+            System.out.println("Item [" + newItem + "] was added to stock.");
+
+        } catch (NumberFormatException | InputMismatchException ex) {
             System.err.println("Invalid price entry!");
         }
     }
